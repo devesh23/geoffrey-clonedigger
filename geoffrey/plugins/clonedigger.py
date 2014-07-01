@@ -77,9 +77,13 @@ class CloneDigger(plugin.GeoffreyPlugin):
 
             with tempfile.TemporaryDirectory() as td:
                 execution_stats = yield from execute(clonedigger_path, '--cpd-output', filename, cwd=td)
-
+                computed_path = os.path.join(td, 'output.xml')
 #                html_output = open(os.path.join(td, 'output.html')).read()
-                xml_output = open(os.path.join(td, 'output.xml')).read()
+                if not os.path.exists(computed_path):
+                    self.log.warning('Clonedigger did not generate output file')
+                    continue
+                else:
+                    xml_output = open(computed_path, 'rb').read()
 
             data = {}
             
