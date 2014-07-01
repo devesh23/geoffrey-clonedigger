@@ -12,7 +12,10 @@ from geoffrey.subscription import subscription
 
 
 class HTMLParser(parser.HTMLParser):
+    """ Basic parser for CloneDigger html output """
+
     def __init__(self, *args, **kwargs):
+        """ initialize necessary variables """
         super().__init__(*args, **kwargs)
         self.read_data = False
         self.tagread = 0
@@ -20,17 +23,19 @@ class HTMLParser(parser.HTMLParser):
         self.tag_data = {}
 
     def handle_starttag(self, tag, attrs):
+        """ do stuff when start tag has been found """
         if tag == 'p':
             self.read_data = True
             self.current_tag = 'p'
             self.tagread += 1
 
     def handle_endtag(self, tag):
-        print('ended ' + tag)
+        """ do stuff when end tag has been found """
         if tag == self.current_tag:
             self.read_data = False
 
     def handle_data(self, data):
+        """ do stuff when data has been found """
         if self.read_data == True:
             if self.current_tag + str(self.tagread) in self.tag_data:
                 self.tag_data[self.current_tag + str(self.tagread)] += data
@@ -97,11 +102,13 @@ class CloneDigger(plugin.GeoffreyPlugin):
             yield from self.hub.put(state)
 
     def parse_html(self, html):
+        """ Parse HTML output """
         parser = HTMLParser()
         parser.feed(html)
         return parser.tag_data
 
     def parse_xml(self, xml):
+        """ Parse XML output """
 
         etree = ElementTree.fromstring(xml)
         parsed_data = []
