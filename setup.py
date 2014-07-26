@@ -17,5 +17,5 @@ setup(name='geoffrey-clonedigger',
       url='https://github.com/GeoffreyCI/geoffrey-clonedigger',
       include_package_data=True,
       packages=find_packages(),
-      namespace_package=['geoffrey.plugins'],
+      namespace_package=['geoffreyplugins'],
 )

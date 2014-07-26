@@ -1,1 +1,4 @@
-graft geoffrey/plugins/geoffrey-clonedigger
+include *.txt
+include *.rst
+graft geoffreyplugins/clonedigger
+recursive-exclude geoffreyplugins *.pyc *__pycache__*
